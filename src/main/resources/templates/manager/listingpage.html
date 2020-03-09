@@ -1,0 +1,58 @@
+<!DOCTYPE html  SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>Listing Page</title>
+</head>
+<body>
+<div class="mx-auto text-center mt-5">
+<a href="/manager/"><button type="button" class="btn btn-primary">Back to Manager Page</button></a></div>
+<!-- List All Job Listings -->
+<table class="table w-50 mx-auto mb-5 mt-5">
+    <tr>
+        <th >Job Title</th>
+        <th>Options</th>
+    </tr>
+    <tr  th:each="job : ${jobs}">
+        <td th:text="${job.getTitle()}"></td>
+        <td>
+            <a th:href="@{'/manager/listingpage/'+${job.getId()}}"><button id="showDetails" class="btn btn-primary" type="button">Show Details</button></a>
+            <!-- Delete specific job listing -->
+            <a th:href="@{'/manager/listingpage/delete/' + ${job.getId()}}"><button class="btn btn-primary" type="button" >Delete Job Listing</button></a>
+        </td>
+    </tr>
+</table>
+
+<div class="w3-container">
+<div id="id01" class="w3-modal" th:unless="${withId == null}" style="display: block">
+    <div class="w3-modal-content w3-animate-zoom">
+        <div class="w3-container">
+            <div class="text-right"><a href="/manager/listingpage" ><span id="span" class="w3-button">&times;</span></a></div>
+            <h3 class="font-weight-bold">Job Information</h3>
+            <dl class="row">
+                <dt class="col-sm-3">Job Listing ID:</dt>
+                <dd class="col-sm-9" th:text="${withId.getId()}"></dd>
+
+                <dt class="col-sm-3">Job Title:</dt>
+                <dd class="col-sm-9" th:text="${withId.getTitle()}"></dd>
+
+                <dt class="col-sm-3">Job Description:</dt>
+                <dd class="col-sm-9" ><p th:text="${withId.getDescription()}"></p></dd>
+
+                <dt class="col-sm-3">Number of people to hire:</dt>
+                <dd class="col-sm-9" th:text="${withId.getNumberOfPeople()}"></dd>
+
+                <dt class="col-sm-3">Last Application Date:</dt>
+                <dd class="col-sm-9" th:text="${withId.getLastDate()}"></dd>
+
+            </dl>
+        </div>
+    </div>
+    </div>
+</div>
+
+</body>
+</html>

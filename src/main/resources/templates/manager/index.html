@@ -1,0 +1,78 @@
+<!DOCTYPE html  SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script>
+        function buttonOnClick(id) {
+
+            if(id=="add")
+                document.getElementById("id01").style.display="block";
+            else
+                document.getElementById("id01").style.display="none";
+        }
+    </script>
+    <title>Manager Page</title>
+</head>
+<body>
+
+    <!-- Page Name -->
+    <div class="jumbotron w-75 mx-auto">
+        <h1 class="display-4 text-center">HR Manager Page</h1>
+        <hr class="my-4">
+        <div class="row float-right">
+           <a href="/manager/listingpage"><button class="btn btn-primary btn-lg mr-1"  type="button">List All Job Listings</button></a>
+            <a href ="/manager/applicants"><button id="showApplicant" class="btn btn-primary btn-lg mr-1"  type="button" >Show All Applicants</button></a>
+            <button id="add" class="btn btn-primary btn-lg mr-1"  type="button" onclick="buttonOnClick(this.id)">Add Job Listing</button>
+            <form th:action="@{/logout}"  method="post"><button class="btn btn-primary btn-lg "  type="submit" >Log Out</button></form><br/>
+        </div>
+    </div>
+
+    <div id="id01" class="w3-modal" >
+        <div class="w3-modal-content w3-animate-zoom">
+            <div class="w3-container">
+                <div class="text-right"><span id="span" onclick="buttonOnClick(this.id)" class="w3-button">&times;</span></div>
+                <!-- Job Add Form -->
+                <div id="addForm" class="mx-auto mt-5 mb-5  px-5">
+
+                    <form th:action="@{'/manager'}" th:object="${addJob}" method="post">
+                        <div class="form-group mt-5">
+                            <label>Job Title:</label>
+                            <input type="text" class="form-control w-25" required th:field="*{title}" />
+                        </div>
+                        <div class="form-group">
+                            <label>Job Description:</label>
+                            <textarea  class="form-control" rows="3" required th:field="*{description}"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Number of People to Hire:</label>
+                            <input  type="number" class="form-control w-25" min="1" th:field="*{numberOfPeople}" />
+                        </div>
+                        <div class="form-group">
+                            <label >Last Application Date:</label>
+                            <input type="date" class="form-control w-25" required th:field="*{lastDate}"/>
+                        </div>
+                        <div class="form-group mb-5 text-right">
+                            <button id="back" type="button" class="btn btn-primary" onclick="buttonOnClick(this.id)">Close</button>
+                            <!-- Add new job listing -->
+                            <button type="submit" class="btn btn-primary" >Add This Job Listing</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</body>
+</html>
